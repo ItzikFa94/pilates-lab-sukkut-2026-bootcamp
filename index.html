@@ -85,7 +85,9 @@
   @media(min-width:860px){ .hero{padding:96px 0 32px;} }
   .hero .wrap{
     display:flex; flex-direction:column; align-items:center;
+    padding-top:36px;
   }
+  @media(min-width:860px){ .hero .wrap{padding-top:48px;} }
   .hero-title{
     font-size:clamp(1.2rem, 11vw, 4.6rem);
     color:var(--ink);
@@ -94,6 +96,12 @@
   .hero-kicker{
     font-size:1.2rem; letter-spacing:.16em; text-transform:uppercase;
     font-weight:700; color:var(--wood-deep); margin-bottom:18px; display:block;
+  }
+  .hero-list{
+    display:flex; flex-direction:column; align-items:center; gap:2px;
+    font-family:'Frank Ruhl Libre',serif; font-weight:500;
+    font-size:clamp(1.15rem, 4.2vw, 1.55rem); color:var(--ink);
+    margin:0 auto 16px;
   }
   .hero-sub{
     font-family:'Heebo',sans-serif; font-weight:400;
@@ -109,12 +117,12 @@
   }
   .hero-meta b{color:var(--ink); font-weight:700;}
   .hero-meta .meta-sep{color:var(--muted); font-weight:400;}
-  .hero-photo{
-    margin:34px auto 0; max-width:340px; border-radius:var(--radius);
-    overflow:hidden; box-shadow:0 18px 40px rgba(36,33,25,.14);
+  .hero-photo{width:100%;}
+  .hero-photo img{
+    width:100%; display:block; object-fit:cover;
+    height:52vh; min-height:300px; max-height:560px;
+    object-position:center 32%;
   }
-  .hero-photo img{width:100%; display:block; object-fit:cover; aspect-ratio:4/3; object-position:center 35%;}
-  @media(min-width:860px){ .hero-photo{max-width:460px;} }
 
   /* ---------- BUTTONS ---------- */
   .btn{
@@ -334,12 +342,17 @@
 </nav>
 
 <header class="hero" id="home">
+  <div class="hero-photo">
+    <img src="img/hero-decor.jpg" alt="תרגול על מכשירי Gratz — PILATES LAB">
+  </div>
   <div class="wrap">
-    <div class="hero-photo">
-      <img src="img/hero-decor.jpg" alt="תרגול על מכשירי Gratz — PILATES LAB">
-    </div>
     <h1 class="hero-title">Bootcamp למדריכות פילאטיס</h1>
-    <p class="hero-sub">ארבעה ימים. ארבעה עקרונות תנועה. עשרה מכשירים. הזדמנות להבין את התנועה שמאחורי התרגיל.</p>
+    <div class="hero-list">
+      <span>ארבעה ימים.</span>
+      <span>ארבעה עקרונות תנועה.</span>
+      <span>עשרה מכשירים.</span>
+    </div>
+    <p class="hero-sub">הזדמנות להבין את התנועה שמאחורי התרגיל.</p>
     <div class="hero-meta">
       <span dir="ltr"><b>28.09 – 01.10</b></span>
       <span class="meta-sep">|</span>
