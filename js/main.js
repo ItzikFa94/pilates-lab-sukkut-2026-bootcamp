@@ -80,6 +80,19 @@ function sendLead(name, phone, note) {
   } catch (e) { /* never block the user's flow on a tracking failure */ }
 }
 
+// Fire a background call to append a row to the Google Sheet, never blocks WhatsApp
+function saveToSheet(name, phone, note) {
+  if (!name && !phone) return; // nothing to save, skip silently
+  try {
+    fetch('/.netlify/functions/save-to-sheet', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, phone, note }),
+      keepalive: true,
+    }).catch(() => {});
+  } catch (e) { /* never block the user's flow on a tracking failure */ }
+}
+
 // Full bootcamp button
 const fullBtn = document.getElementById('fullBtn');
 fullBtn.addEventListener('click', () => {
@@ -94,6 +107,7 @@ btnEl.addEventListener('click', () => {
   const phone = document.getElementById('odPhone').value.trim();
   const selected = checks.filter(c => c.checked).map(c => c.dataset.label).join(' | ');
   sendLead(name, phone, 'ONE DAY: ' + selected);
+  saveToSheet(name, phone, 'ONE DAY: ' + selected);
 });
 
 function initLeadGate(nameId, phoneId, btnId, waHref) {
