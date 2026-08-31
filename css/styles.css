@@ -73,12 +73,12 @@ img {
 }
 
 section {
-  padding: 0px 0px 40px 0px;
+  padding: 10px 0px 20px 0px;
   text-align: center;
   margin-left: auto;
   margin-right: auto;
   border-top: 1px solid var(--line);
-  padding-top: 15px;
+  padding-top: 20px;
 }
 @media (min-width: 860px) {
   section {
@@ -316,21 +316,25 @@ section {
   gap: 26px;
 }
 .intro h2 {
-  font-size: clamp(1.9rem, 6vw, 2.6rem);
+  font-size: clamp(1.7rem, 6vw, 2.6rem);
   padding-top: 10px;
   padding-bottom: 10px;
 }
 
+.intro p {
+  font-size: 1.2rem;
+} 
+
 .principles {
   display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
+  gap: 5px;
   justify-content: center;
   align-items: center;
+  margin-bottom: 16px;
 }
 
 .principle-chip {
-  font-size: 0.82rem;
+  font-size: 1rem;
   font-weight: 700;
   line-height: 1.6;
 }
@@ -431,7 +435,7 @@ section {
   font-size: 1rem;
   letter-spacing: 0.1em;
   font-weight: 700;
-  color: var(--moss);
+  color: #242119;
   text-transform: uppercase;
   display: block;
   margin-bottom: 0.5em;
