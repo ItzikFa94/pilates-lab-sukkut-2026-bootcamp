@@ -15,6 +15,53 @@ document.querySelectorAll('.faq-item').forEach(item => {
   });
 });
 
+// ========== DAY CAROUSEL ==========
+const dayCarousel = document.querySelector('.days-carousel');
+if (dayCarousel) {
+  const dayCards = Array.from(dayCarousel.querySelectorAll('.day-card'));
+  const dayDots = Array.from(document.querySelectorAll('.carousel-dot'));
+  const dayPrev = document.getElementById('dayPrev');
+  const dayNext = document.getElementById('dayNext');
+  let activeDay = 0;
+  let scrollFrame;
+
+  function setActiveDay(index) {
+    activeDay = Math.max(0, Math.min(index, dayCards.length - 1));
+    dayDots.forEach((dot, dotIndex) => {
+      dot.classList.toggle('is-active', dotIndex === activeDay);
+      dot.setAttribute('aria-current', dotIndex === activeDay ? 'true' : 'false');
+    });
+    dayPrev.disabled = activeDay === 0;
+    dayNext.disabled = activeDay === dayCards.length - 1;
+  }
+
+  function scrollToDay(index) {
+    setActiveDay(index);
+    dayCards[activeDay].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
+  }
+
+  function closestDayIndex() {
+    const carouselRect = dayCarousel.getBoundingClientRect();
+    const carouselCenter = carouselRect.left + carouselRect.width / 2;
+    return dayCards.reduce((closestIndex, card, index) => {
+      const cardRect = card.getBoundingClientRect();
+      const distance = Math.abs(cardRect.left + cardRect.width / 2 - carouselCenter);
+      const closestRect = dayCards[closestIndex].getBoundingClientRect();
+      const closestDistance = Math.abs(closestRect.left + closestRect.width / 2 - carouselCenter);
+      return distance < closestDistance ? index : closestIndex;
+    }, 0);
+  }
+
+  dayPrev.addEventListener('click', () => scrollToDay(activeDay - 1));
+  dayNext.addEventListener('click', () => scrollToDay(activeDay + 1));
+  dayDots.forEach((dot, index) => dot.addEventListener('click', () => scrollToDay(index)));
+  dayCarousel.addEventListener('scroll', () => {
+    cancelAnimationFrame(scrollFrame);
+    scrollFrame = requestAnimationFrame(() => setActiveDay(closestDayIndex()));
+  }, { passive: true });
+  setActiveDay(0);
+}
+
 // ========== DAY SELECTION + PRICING ==========
 const checks = Array.from(document.querySelectorAll('.day-check'));
 const totalEl = document.getElementById('pickerTotal');
@@ -35,6 +82,17 @@ function totalFor(selected) {
     : selected.length * PRICE_PER_DAY;
 }
 
+function isValidPhoneNumber(value) {
+  const normalized = value.trim().replace(/[\s().-]/g, '');
+  if (!normalized) return false;
+
+  // Accept an international number with a + country code, or an Israeli mobile
+  // number with or without its leading zero (for example 0502121876 / 502121876).
+  if (/^\+\d{8,15}$/.test(normalized)) return true;
+  if (!/^\d+$/.test(normalized)) return false;
+  return /^(?:(?:00)?972)?0?5\d{8}$/.test(normalized);
+}
+
 function buildMessage(selected, name = '') {
   if (selected.length === 0) return '';
   const lines = selected.map(c => '• ' + c.dataset.label);
@@ -52,9 +110,8 @@ function buildMessage(selected, name = '') {
 function refresh() {
   const selected = checks.filter(c => c.checked);
   const total = totalFor(selected);
-  const hasName = oneDayNameEl.value.trim().length > 1;
-  const phoneDigits = oneDayPhoneEl.value.trim().replace(/\D/g, '');
-  const hasPhone = phoneDigits.length >= 9 && phoneDigits.length <= 10;
+  const hasName = oneDayNameEl.value.trim().length > 0;
+  const hasPhone = isValidPhoneNumber(oneDayPhoneEl.value);
   totalEl.textContent = total.toLocaleString('he-IL') + ' ₪';
   originalTotalEl.classList.toggle('is-hidden', selected.length !== checks.length);
 
@@ -64,9 +121,14 @@ function refresh() {
 
   if (selected.length === 0 || !hasName || !hasPhone) {
     btnEl.setAttribute('disabled', 'true');
+    btnEl.setAttribute('aria-disabled', 'true');
     btnEl.href = '#';
   } else {
     btnEl.removeAttribute('disabled');
+    btnEl.setAttribute('aria-disabled', 'false');
+    btnEl.href = 'https://wa.me/972523166617?text=' + encodeURIComponent(
+      msgEl.value || buildMessage(selected, oneDayNameEl.value)
+    );
   }
 }
 
@@ -74,20 +136,21 @@ checks.forEach(c => c.addEventListener('change', () => {
   userEditedMsg = false; // regenerate base message when selection changes
   refresh();
 }));
-oneDayNameEl.addEventListener('input', refresh);
-oneDayPhoneEl.addEventListener('input', refresh);
+[oneDayNameEl, oneDayPhoneEl].forEach(field => {
+  ['input', 'change', 'blur'].forEach(eventName => field.addEventListener(eventName, refresh));
+});
 
 btnEl.addEventListener('click', (e) => {
+  refresh(); // Covers browsers that populate the fields through autofill without an input event.
   const selected = checks.filter(c => c.checked);
   if (btnEl.hasAttribute('disabled') || selected.length === 0) {
     e.preventDefault();
-    return;
   }
-  const text = encodeURIComponent(msgEl.value || buildMessage(selected, oneDayNameEl.value));
-  btnEl.href = 'https://wa.me/972523166617?text=' + text;
 });
 
 refresh();
+window.addEventListener('pageshow', refresh);
+window.setTimeout(refresh, 300);
 
 // Fire a background call to append a row to the Google Sheet, never blocks WhatsApp.
 function saveToSheet(name, phone, selectedDays) {

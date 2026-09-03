@@ -37,6 +37,7 @@
         <div class="hero-list">
           <span>ארבעה ימים.</span>
           <span>ארבעה עקרונות תנועה.</span>
+          <span>שמונה משתתפות.</span>
           <span>עשרה מכשירים.</span>
         </div>
         <div class="hero-meta">
@@ -240,6 +241,16 @@
           </div>
         </article>
         </div>
+        <div class="carousel-navigation" aria-label="ניווט בין ימי הבוטקאמפ">
+          <button class="carousel-arrow" id="dayPrev" type="button" aria-label="ליום הקודם">→</button>
+          <div class="carousel-dots" aria-label="בחירת יום">
+            <button class="carousel-dot is-active" type="button" aria-label="יום 1" data-day-index="0"></button>
+            <button class="carousel-dot" type="button" aria-label="יום 2" data-day-index="1"></button>
+            <button class="carousel-dot" type="button" aria-label="יום 3" data-day-index="2"></button>
+            <button class="carousel-dot" type="button" aria-label="יום 4" data-day-index="3"></button>
+          </div>
+          <button class="carousel-arrow" id="dayNext" type="button" aria-label="ליום הבא">←</button>
+        </div>
       </section>
 
       <section class="takeaways">
@@ -291,7 +302,7 @@
         </p>
 
         <div class="pricing-grid">
-          <div class="price-card featured">
+          <div class="price-card featured" id="pricing-card">
             <h3>BOOTCAMP</h3>
             <p class="price-meta">כל יום בנפרד עולה 400 ₪ — ארבעת הימים ביחד במחיר מיוחד של 1,400 ₪ (כבר נבחרו). ניתן לערוך לפי מה שמתאים לך.</p>
 
@@ -372,6 +383,7 @@
               <input
                 type="text"
                 id="odName"
+                name="name"
                 class="lead-input"
                 placeholder="שם מלא"
                 autocomplete="name"
@@ -380,6 +392,7 @@
               <input
                 type="tel"
                 id="odPhone"
+                name="tel"
                 class="lead-input"
                 placeholder="טלפון"
                 autocomplete="tel"
@@ -496,11 +509,9 @@
       </div>
       <a
         class="btn btn-primary"
-        target="_blank"
-        rel="noopener"
-        href="https://wa.me/972523166617?text=%D7%94%D7%99%D7%99%2C%20%D7%9E%D7%AA%D7%A2%D7%A0%D7%99%D7%99%D7%A0%D7%AA%20%D7%91%D7%94%D7%A8%D7%A9%D7%9E%D7%94%20%D7%9C%D7%91%D7%95%D7%98%D7%A7%D7%90%D7%9E%D7%A4"
+        href="#pricing-card"
       >
-        לשריון מקום
+        שרייני מקום
       </a>
     </div>
 
