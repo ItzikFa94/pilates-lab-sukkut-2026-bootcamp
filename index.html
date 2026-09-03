@@ -16,10 +16,17 @@
     <link rel="stylesheet" href="css/styles.css" />
   </head>
   <body>
-    <nav class="nav">
+    <nav class="nav" aria-label="ניווט ראשי">
       <div class="wrap">
-        <div class="brand-container">
+        <a class="brand-container" href="#home" aria-label="חזרה לראש הדף">
           <div class="brand">PILATES LAB</div>
+        </a>
+        <div class="quick-nav" aria-label="קישורים מהירים">
+          <a href="#intro">על הבוטקאמפ</a>
+          <a href="#about">קצת עליי</a>
+          <a href="#days">תוכניה</a>
+          <a href="#faq">שאלות נפוצות</a>
+          <a class="quick-nav-register" href="#pricing">- הרשמה -</a>
         </div>
       </div>
     </nav>
@@ -51,7 +58,7 @@
     </header>
 
     <main class="wrap">
-      <section class="intro">
+      <section class="intro" id="intro">
         <div>
           <h2>בוטקאמפ מקצועי ואינטימי, עם הציוד הטוב בעולם</h2>
           <p>
@@ -72,6 +79,7 @@
             לא עוד רשימת תרגילים — אלא הזדמנות להבין את התנועה שמאחורי התרגיל,
             ולגלות איך המכשירים השונים יכולים לעזור לנו למצוא, לדייק וללמד אותה.
           </p>
+          <p>כל זה בקבוצה קטנה של עד שמונה משתתפות.</p>
         </div>
         <div class="intro-img">
           <img class="circle-img" src="img/intropic.jpg" alt="Baby Chair and Ped O Pull" />
@@ -253,7 +261,7 @@
         </div>
       </section>
 
-      <section class="takeaways">
+      <section class="takeaways" id="takeaways">
         <span class="eyebrow">בסיום הבוטקאמפ</span>
         <h2 class="section-title">מה תיקחי איתך מהבוטקאמפ?</h2>
         <ul class="takeaway-list">
@@ -477,7 +485,7 @@
           </div>
           <div class="faq-item">
             <div class="faq-q">
-              <span>תנאי ביטול</span><span class="plus">+</span>
+              <span>מדיניות ביטולים</span><span class="plus">+</span>
             </div>
             <div class="faq-a">
               <div class="faq-policy">

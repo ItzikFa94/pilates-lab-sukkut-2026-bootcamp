@@ -34,7 +34,7 @@ img { display: block; max-width: 100%; }
 .section-title { font-size: clamp(1.9rem, 6vw, 2.6rem); }
 .section-lede { max-width: 600px; margin: var(--space-3) auto 0; }
 .center { margin-inline: auto; text-align: center; }
-section { position: relative; padding: var(--space-4) 0; text-align: center; }
+section { position: relative; padding: var(--space-4) 0; scroll-margin-top: 78px; text-align: center; }
 main > section + section::before {
   position: absolute;
   top: 0;
@@ -48,9 +48,14 @@ main > section + section::before {
 
 /* Navigation */
 .nav { position: sticky; top: 0; z-index: 40; border-bottom: 1px solid var(--line); background: rgba(237, 234, 227, 0.92); backdrop-filter: blur(8px); }
-.nav .wrap { display: flex; justify-content: center; padding-block: 10px; }
+.nav .wrap { display: grid; justify-items: center; padding-block: 8px 6px; }
 .brand-container { display: flex; flex-direction: column; align-items: center; }
 .brand { white-space: nowrap; font-family: "Frank Ruhl Libre", serif; font-size: 1.15rem; font-weight: 900; letter-spacing: 0.02em; }
+.quick-nav { display: flex; width: 100%; flex-wrap: wrap; justify-content: center; gap: 4px 0; padding-top: 5px; }
+.quick-nav a { padding-inline: 8px; color: var(--ink-soft); font-size: 0.78rem; font-weight: 600; }
+.quick-nav a + a { border-inline-start: 1px solid var(--line); }
+.quick-nav .quick-nav-register { flex-basis: 100%; border-inline-start: 0; color: var(--wood-deep); font-weight: 800; text-align: center; }
+.quick-nav a:active, .quick-nav a:hover { color: var(--wood-deep); }
 
 /* Hero */
 .hero { padding: 0; text-align: center; }
@@ -88,9 +93,9 @@ main > section + section::before {
 .days-head { margin-bottom: var(--space-5); }
 .equipment-list { display: grid; gap: var(--space-1); max-width: 620px; margin: var(--space-4) auto 0; font-size: 0.95rem; }
 .equipment-list span { line-height: 1.75; }
-.days-carousel { display: flex; gap: var(--space-3); overflow-x: auto; overscroll-behavior-inline: contain; scroll-snap-type: x mandatory; scrollbar-width: none; }
+.days-carousel { display: flex; gap: var(--space-3); overflow-x: auto; overscroll-behavior-inline: contain; scrollbar-width: none; }
 .days-carousel::-webkit-scrollbar { display: none; }
-.days-carousel .day-card { min-width: calc(100% - 36px); flex: 0 0 calc(100% - 36px); margin-bottom: 0; scroll-snap-align: start; scroll-snap-stop: always; }
+.days-carousel .day-card { min-width: calc(100% - 36px); flex: 0 0 calc(100% - 36px); margin-bottom: 0; }
 .carousel-navigation { display: flex; align-items: center; justify-content: space-between; margin-top: var(--space-3); }
 .carousel-dots { display: flex; align-items: center; gap: 7px; }
 .carousel-dot { width: 7px; height: 7px; border: 0; border-radius: 50%; padding: 0; background: var(--line); cursor: pointer; transition: width 0.2s ease, background 0.2s ease; }
@@ -128,6 +133,7 @@ main > section + section::before {
 .pricing-grid { display: grid; max-width: 640px; gap: var(--space-4); margin: var(--space-5) auto 0; }
 .price-card { position: relative; padding: 28px 24px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
 .price-card.featured { border-color: var(--wood); box-shadow: 0 0 0 2px var(--wood); }
+#pricing-card { scroll-margin-top: 78px; }
 .price-card h3 { font-size: 1.3rem; }
 .price-meta { margin-top: var(--space-1); color: var(--muted); font-size: 0.87rem; }
 .price-amount { margin: 0; font-family: "Rubik", sans-serif; font-size: 2.6rem; font-weight: 700; }
@@ -168,9 +174,7 @@ main > section + section::before {
 @media (min-width: 760px) { .day-inner { padding: 28px 32px; } }
 @media (max-width: 859px) {
   /* Keep the day cards comfortably within a mobile viewport without hiding content. */
-  html { scroll-snap-type: y proximity; }
-  .days-carousel { scroll-snap-align: start; scroll-margin-top: 50px; }
-  .price-card.featured { scroll-snap-align: start; scroll-margin-top: 50px; padding: 12px 14px; }
+  .price-card.featured { padding: 12px 14px; }
   .days-head { margin-bottom: var(--space-4); }
   .day-photo { aspect-ratio: 16 / 7.5; }
   .day-inner { padding: 14px 16px; }
