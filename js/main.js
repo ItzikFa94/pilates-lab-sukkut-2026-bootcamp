@@ -19,6 +19,12 @@ document.querySelectorAll('.faq-item').forEach(item => {
 document.querySelectorAll('.testimonial-toggle').forEach(button => {
   const testimonial = document.getElementById(button.getAttribute('aria-controls'));
   if (!testimonial) return;
+  const copy = testimonial.querySelector('p');
+
+  if (copy && copy.scrollHeight <= copy.clientHeight) {
+    button.hidden = true;
+    return;
+  }
 
   button.addEventListener('click', () => {
     const isExpanded = testimonial.classList.toggle('is-expanded');
