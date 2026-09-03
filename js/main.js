@@ -15,32 +15,87 @@ document.querySelectorAll('.faq-item').forEach(item => {
   });
 });
 
-// Keep the mobile call to action out of the hero, then reveal it while moving down the page.
-const stickyBar = document.querySelector('.sticky-bar');
-if (stickyBar) {
-  let lastScrollY = window.scrollY;
-  let scrollPending = false;
+// Testimonial previews
+document.querySelectorAll('.testimonial-toggle').forEach(button => {
+  const testimonial = document.getElementById(button.getAttribute('aria-controls'));
+  if (!testimonial) return;
 
-  function updateStickyBar() {
-    const currentScrollY = window.scrollY;
-    if (currentScrollY <= 180) {
-      stickyBar.classList.remove('is-visible');
-    } else if (currentScrollY > lastScrollY) {
-      stickyBar.classList.add('is-visible');
-    } else if (currentScrollY < lastScrollY) {
-      stickyBar.classList.remove('is-visible');
+  button.addEventListener('click', () => {
+    const isExpanded = testimonial.classList.toggle('is-expanded');
+    button.setAttribute('aria-expanded', String(isExpanded));
+    button.textContent = isExpanded ? 'להצגת פחות' : 'לקריאה מלאה';
+  });
+});
+
+// Testimonial carousel controls are added only once there is more than one quote.
+const testimonialCarousel = document.querySelector('.testimonial-carousel');
+if (testimonialCarousel) {
+  const testimonialCards = Array.from(testimonialCarousel.querySelectorAll('.testimonial-card'));
+  const testimonialNavigation = testimonialCarousel.parentElement.querySelector('.testimonial-navigation');
+
+  if (testimonialCards.length > 1 && testimonialNavigation) {
+    let activeTestimonial = 0;
+    let scrollFrame;
+    const prev = document.createElement('button');
+    const next = document.createElement('button');
+    const dots = document.createElement('div');
+    const dotButtons = testimonialCards.map((card, index) => {
+      const dot = document.createElement('button');
+      dot.className = 'testimonial-dot';
+      dot.type = 'button';
+      dot.setAttribute('aria-label', `המלצה ${index + 1}`);
+      dot.addEventListener('click', () => scrollToTestimonial(index));
+      dots.append(dot);
+      return dot;
+    });
+
+    prev.className = 'carousel-arrow';
+    prev.type = 'button';
+    prev.textContent = '→';
+    prev.setAttribute('aria-label', 'להמלצה הקודמת');
+    next.className = 'carousel-arrow';
+    next.type = 'button';
+    next.textContent = '←';
+    next.setAttribute('aria-label', 'להמלצה הבאה');
+    dots.className = 'testimonial-dots';
+    testimonialNavigation.append(prev, dots, next);
+    testimonialNavigation.hidden = false;
+
+    function setActiveTestimonial(index) {
+      activeTestimonial = Math.max(0, Math.min(index, testimonialCards.length - 1));
+      dotButtons.forEach((dot, dotIndex) => {
+        dot.classList.toggle('is-active', dotIndex === activeTestimonial);
+        dot.setAttribute('aria-current', dotIndex === activeTestimonial ? 'true' : 'false');
+      });
+      prev.disabled = activeTestimonial === 0;
+      next.disabled = activeTestimonial === testimonialCards.length - 1;
     }
-    lastScrollY = currentScrollY;
-    scrollPending = false;
+
+    function scrollToTestimonial(index) {
+      setActiveTestimonial(index);
+      testimonialCards[activeTestimonial].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
+    }
+
+    function closestTestimonialIndex() {
+      const carouselRect = testimonialCarousel.getBoundingClientRect();
+      const carouselCenter = carouselRect.left + carouselRect.width / 2;
+      return testimonialCards.reduce((closestIndex, card, index) => {
+        const cardRect = card.getBoundingClientRect();
+        const closestRect = testimonialCards[closestIndex].getBoundingClientRect();
+        const distance = Math.abs(cardRect.left + cardRect.width / 2 - carouselCenter);
+        const closestDistance = Math.abs(closestRect.left + closestRect.width / 2 - carouselCenter);
+        return distance < closestDistance ? index : closestIndex;
+      }, 0);
+    }
+
+    prev.addEventListener('click', () => scrollToTestimonial(activeTestimonial - 1));
+    next.addEventListener('click', () => scrollToTestimonial(activeTestimonial + 1));
+    testimonialCarousel.addEventListener('scroll', () => {
+      cancelAnimationFrame(scrollFrame);
+      scrollFrame = requestAnimationFrame(() => setActiveTestimonial(closestTestimonialIndex()));
+    }, { passive: true });
+    setActiveTestimonial(0);
   }
-
-  window.addEventListener('scroll', () => {
-    if (!scrollPending) {
-      scrollPending = true;
-      requestAnimationFrame(updateStickyBar);
-    }
-  }, { passive: true });
-  updateStickyBar();
 }
 
 // ========== DAY CAROUSEL ==========
