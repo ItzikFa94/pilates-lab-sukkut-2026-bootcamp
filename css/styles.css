@@ -48,10 +48,9 @@ main > section + section::before {
 
 /* Navigation */
 .nav { position: sticky; top: 0; z-index: 40; border-bottom: 1px solid var(--line); background: rgba(237, 234, 227, 0.92); backdrop-filter: blur(8px); }
-.nav .wrap { display: flex; justify-content: center; padding-block: var(--space-2); }
+.nav .wrap { display: flex; justify-content: center; padding-block: 10px; }
 .brand-container { display: flex; flex-direction: column; align-items: center; }
 .brand { white-space: nowrap; font-family: "Frank Ruhl Libre", serif; font-size: 1.15rem; font-weight: 900; letter-spacing: 0.02em; }
-.brand-byline { white-space: nowrap; margin-top: 2px; color: var(--muted); font-family: "Frank Ruhl Libre", serif; font-size: 0.85rem; font-weight: 500; letter-spacing: 0.04em; }
 
 /* Hero */
 .hero { padding: 0; text-align: center; }
@@ -89,6 +88,9 @@ main > section + section::before {
 .days-head { margin-bottom: var(--space-5); }
 .equipment-list { display: grid; gap: var(--space-1); max-width: 620px; margin: var(--space-4) auto 0; font-size: 0.95rem; }
 .equipment-list span { line-height: 1.75; }
+.days-carousel { display: flex; gap: var(--space-3); overflow-x: auto; overscroll-behavior-inline: contain; scroll-snap-type: x mandatory; scrollbar-width: none; }
+.days-carousel::-webkit-scrollbar { display: none; }
+.days-carousel .day-card { min-width: 100%; flex: 0 0 100%; margin-bottom: 0; scroll-snap-align: start; scroll-snap-stop: always; }
 .day-card { overflow: hidden; margin-bottom: var(--space-3); border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
 .day-card:last-child { margin-bottom: 0; }
 .day-photo { aspect-ratio: 16 / 10; overflow: hidden; }
@@ -167,6 +169,8 @@ main > section + section::before {
   .intro-img { max-width: 460px; justify-self: center; }
   .about-copy { font-size: 1.08rem; }
   .equipment-list { font-size: 1rem; }
+  .days-carousel { display: grid; gap: var(--space-3); overflow: visible; }
+  .days-carousel .day-card { min-width: 0; }
   .day-card { display: grid; grid-template-columns: 1fr 1.12fr; min-height: 440px; }
   .day-card .day-photo { grid-column: 2; grid-row: 1; aspect-ratio: auto; }
   .day-card .day-inner { display: flex; grid-column: 1; grid-row: 1; align-items: center; padding: 48px 42px; text-align: right; }
