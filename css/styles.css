@@ -157,7 +157,8 @@ main > section + section::before {
 .faq-policy { padding-bottom: 18px; text-align: right; }
 .faq-policy p { padding-bottom: 0; }
 .faq-policy ul { display: grid; gap: var(--space-2); margin: 0 0 var(--space-3); padding: 0 1.2em 0 0; color: var(--ink-soft); line-height: 1.7; }
-.sticky-bar { position: fixed; right: 0; bottom: 0; left: 0; z-index: 50; display: flex; align-items: center; gap: var(--space-2); border-top: 1px solid var(--line); padding: 10px 16px calc(10px + env(safe-area-inset-bottom)); background: var(--surface); box-shadow: 0 -6px 18px rgba(36, 33, 25, 0.08); }
+.sticky-bar { position: fixed; right: 0; bottom: 0; left: 0; z-index: 50; display: flex; align-items: center; gap: var(--space-2); border-top: 1px solid var(--line); padding: 10px 16px calc(10px + env(safe-area-inset-bottom)); background: var(--surface); box-shadow: 0 -6px 18px rgba(36, 33, 25, 0.08); pointer-events: none; transform: translateY(120%); transition: transform 0.22s ease; }
+.sticky-bar.is-visible { pointer-events: auto; transform: translateY(0); }
 .sb-text { min-width: 0; flex: 1; }
 .sb-title { font-size: 0.85rem; font-weight: 700; }
 .sb-sub { color: var(--muted); font-size: 0.72rem; }
@@ -169,20 +170,23 @@ main > section + section::before {
   /* Keep the day cards comfortably within a mobile viewport without hiding content. */
   html { scroll-snap-type: y proximity; }
   .days-carousel { scroll-snap-align: start; scroll-margin-top: 50px; }
-  .price-card.featured { scroll-snap-align: start; scroll-margin-top: 50px; padding: 14px 16px; }
+  .price-card.featured { scroll-snap-align: start; scroll-margin-top: 50px; padding: 12px 14px; }
   .days-head { margin-bottom: var(--space-4); }
-  .day-photo { aspect-ratio: 16 / 8.75; }
-  .day-inner { padding: 18px 20px; }
-  .day-body { gap: var(--space-1); }
-  .day-body h3 { font-size: 1.35rem; }
-  .day-body p { line-height: 1.6; }
-  .day-exercises { line-height: 1.45; }
+  .day-photo { aspect-ratio: 16 / 7.5; }
+  .day-inner { padding: 14px 16px; }
+  .day-body { gap: 5px; }
+  .day-body h3 { font-size: 1.25rem; }
+  .day-body p { font-size: 0.93rem; line-height: 1.5; }
+  .day-exercises { font-size: 0.84rem; line-height: 1.35; }
   .carousel-navigation { margin-top: var(--space-2); }
   .price-card h3 { font-size: 1.2rem; }
   .price-meta { margin-top: 4px; font-size: 0.82rem; line-height: 1.45; }
   .price-amount { font-size: 2.3rem; }
-  .day-picker { gap: 4px; margin: 8px 0; }
+  .pricing-grid { margin-top: var(--space-4); }
+  .day-picker { gap: 3px; margin: 6px 0; }
   .day-option { min-height: 44px; gap: var(--space-1); padding: 5px 10px; }
+  .day-option br { display: none; }
+  .do-sub::before { content: " · "; }
   .do-sub { font-size: 0.74rem; }
   .picker-total { margin-bottom: 8px; padding-top: 8px; }
   .field-label { margin-bottom: 3px; }

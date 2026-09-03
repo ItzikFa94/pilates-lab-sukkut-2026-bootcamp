@@ -15,6 +15,34 @@ document.querySelectorAll('.faq-item').forEach(item => {
   });
 });
 
+// Keep the mobile call to action out of the hero, then reveal it while moving down the page.
+const stickyBar = document.querySelector('.sticky-bar');
+if (stickyBar) {
+  let lastScrollY = window.scrollY;
+  let scrollPending = false;
+
+  function updateStickyBar() {
+    const currentScrollY = window.scrollY;
+    if (currentScrollY <= 180) {
+      stickyBar.classList.remove('is-visible');
+    } else if (currentScrollY > lastScrollY) {
+      stickyBar.classList.add('is-visible');
+    } else if (currentScrollY < lastScrollY) {
+      stickyBar.classList.remove('is-visible');
+    }
+    lastScrollY = currentScrollY;
+    scrollPending = false;
+  }
+
+  window.addEventListener('scroll', () => {
+    if (!scrollPending) {
+      scrollPending = true;
+      requestAnimationFrame(updateStickyBar);
+    }
+  }, { passive: true });
+  updateStickyBar();
+}
+
 // ========== DAY CAROUSEL ==========
 const dayCarousel = document.querySelector('.days-carousel');
 if (dayCarousel) {
