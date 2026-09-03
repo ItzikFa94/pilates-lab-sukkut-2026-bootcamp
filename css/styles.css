@@ -167,7 +167,23 @@ main > section + section::before {
 @media (min-width: 760px) { .day-inner { padding: 28px 32px; } }
 @media (min-width: 860px) {
   section { padding: 96px 0; }
+  .hero-photo { max-height: 580px; }
+  .hero-photo img { height: clamp(420px, 42vw, 580px); object-fit: cover; object-position: center 38%; transform: none; }
+  .hero .wrap { padding-top: 48px; }
+  .hero-list { font-size: 1.65rem; }
   .intro { grid-template-columns: 1fr 1fr; align-items: center; }
+  .intro-img { max-width: 460px; justify-self: center; }
+  .about-copy { font-size: 1.08rem; }
+  .equipment-list { font-size: 1rem; }
+  .day-card { display: grid; grid-template-columns: 1fr 1.12fr; min-height: 440px; }
+  .day-card .day-photo { grid-column: 2; grid-row: 1; aspect-ratio: auto; }
+  .day-card .day-inner { display: flex; grid-column: 1; grid-row: 1; align-items: center; padding: 48px 42px; text-align: right; }
+  .day-card .day-body { justify-items: start; text-align: right; }
+  .day-card:nth-of-type(even) .day-photo { grid-column: 1; }
+  .day-card:nth-of-type(even) .day-inner { grid-column: 2; }
+  .takeaway-list { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: var(--space-5); }
+  .why { max-width: 880px; margin-inline: auto; }
   .pricing-grid { grid-template-columns: 1fr 1fr; align-items: start; }
+  .faq-list { max-width: 760px; margin-inline: auto; }
   .why { padding: 64px; }
 }
