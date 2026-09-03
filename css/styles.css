@@ -50,8 +50,8 @@ main > section + section::before {
 .nav { position: sticky; top: 0; z-index: 40; border-bottom: 1px solid var(--line); background: rgba(237, 234, 227, 0.92); backdrop-filter: blur(8px); }
 .nav .wrap { display: flex; justify-content: center; padding-block: var(--space-2); }
 .brand-container { display: flex; flex-direction: column; align-items: center; }
-.brand { font-family: "Frank Ruhl Libre", serif; font-size: 1.15rem; font-weight: 900; letter-spacing: 0.02em; }
-.brand-byline { margin-top: 2px; color: var(--muted); font-family: "Frank Ruhl Libre", serif; font-size: 0.85rem; font-weight: 500; letter-spacing: 0.04em; }
+.brand { white-space: nowrap; font-family: "Frank Ruhl Libre", serif; font-size: 1.15rem; font-weight: 900; letter-spacing: 0.02em; }
+.brand-byline { white-space: nowrap; margin-top: 2px; color: var(--muted); font-family: "Frank Ruhl Libre", serif; font-size: 0.85rem; font-weight: 500; letter-spacing: 0.04em; }
 
 /* Hero */
 .hero { padding: 0; text-align: center; }
@@ -108,7 +108,7 @@ main > section + section::before {
 .why h2 + h2 { margin-top: var(--space-1); }
 .why p { margin-top: var(--space-3); }
 .why p:last-child { margin-bottom: 0; }
-.group-size { color: var(--ink) !important; font-weight: 500; }
+.group-size { color: var(--ink-soft) !important; font-weight: 500; }
 .group-size strong { display: inline-block; margin-bottom: var(--space-1); font-size: 1.1rem; }
 
 /* Takeaways */
