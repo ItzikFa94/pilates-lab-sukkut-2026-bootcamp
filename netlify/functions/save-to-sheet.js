@@ -1,4 +1,4 @@
-// Appends ONE DAY signups to a Google Sheet so they're tracked alongside Wix Contacts.
+// Appends pricing enquiries to a Google Sheet.
 // The service account key lives ONLY here, as env vars — never in the page's HTML/JS.
 //
 // Required environment variables (set in Netlify → Site settings → Environment variables):
@@ -75,8 +75,8 @@ exports.handler = async (event) => {
   }
 
   const { name = '', phone = '', note = '' } = data;
-  if (!name && !phone) {
-    return { statusCode: 200, body: JSON.stringify({ ok: false, reason: 'no_identifying_info' }) };
+  if (!name || !phone) {
+    return { statusCode: 200, body: JSON.stringify({ ok: false, reason: 'missing_contact_details' }) };
   }
 
   try {

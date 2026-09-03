@@ -21,6 +21,8 @@ const totalEl = document.getElementById('pickerTotal');
 const nudgeEl = document.getElementById('pickerNudge');
 const msgEl = document.getElementById('msgPreview');
 const btnEl = document.getElementById('oneDayBtn');
+const oneDayNameEl = document.getElementById('odName');
+const oneDayPhoneEl = document.getElementById('odPhone');
 const PRICE_PER_DAY = 400;
 let userEditedMsg = false;
 
@@ -37,6 +39,9 @@ function buildMessage(selected) {
 function refresh() {
   const selected = checks.filter(c => c.checked);
   const total = selected.length * PRICE_PER_DAY;
+  const hasName = oneDayNameEl.value.trim().length > 1;
+  const phoneDigits = oneDayPhoneEl.value.trim().replace(/\D/g, '');
+  const hasPhone = phoneDigits.length >= 9 && phoneDigits.length <= 10;
   totalEl.textContent = total.toLocaleString('he-IL') + ' ₪';
   nudgeEl.classList.toggle('show', selected.length === 4);
 
@@ -44,7 +49,7 @@ function refresh() {
     msgEl.value = buildMessage(selected);
   }
 
-  if (selected.length === 0) {
+  if (selected.length === 0 || !hasName || !hasPhone) {
     btnEl.setAttribute('disabled', 'true');
     btnEl.href = '#';
   } else {
@@ -56,31 +61,22 @@ checks.forEach(c => c.addEventListener('change', () => {
   userEditedMsg = false; // regenerate base message when selection changes
   refresh();
 }));
+oneDayNameEl.addEventListener('input', refresh);
+oneDayPhoneEl.addEventListener('input', refresh);
 
 btnEl.addEventListener('click', (e) => {
   const selected = checks.filter(c => c.checked);
-  if (selected.length === 0) { e.preventDefault(); return; }
+  if (btnEl.hasAttribute('disabled') || selected.length === 0) {
+    e.preventDefault();
+    return;
+  }
   const text = encodeURIComponent(msgEl.value || buildMessage(selected));
   btnEl.href = 'https://wa.me/972523166617?text=' + text;
 });
 
 refresh();
 
-// ========== LEAD CAPTURE ==========
-// Fire a background call to Netlify function, never blocks WhatsApp
-function sendLead(name, phone, note) {
-  if (!name && !phone) return; // nothing to save, skip silently
-  try {
-    fetch('/.netlify/functions/create-lead', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name, phone, note }),
-      keepalive: true,
-    }).catch(() => {});
-  } catch (e) { /* never block the user's flow on a tracking failure */ }
-}
-
-// Fire a background call to append a row to the Google Sheet, never blocks WhatsApp
+// Fire a background call to append a row to the Google Sheet, never blocks WhatsApp.
 function saveToSheet(name, phone, note) {
   if (!name && !phone) return; // nothing to save, skip silently
   try {
@@ -98,15 +94,16 @@ const fullBtn = document.getElementById('fullBtn');
 fullBtn.addEventListener('click', () => {
   const name = document.getElementById('fbName').value.trim();
   const phone = document.getElementById('fbPhone').value.trim();
-  sendLead(name, phone, 'FULL BOOTCAMP');
+  const interest = 'FULL BOOTCAMP: כל ארבעת הימים (28.09–01.10)';
+  saveToSheet(name, phone, interest);
 });
 
 // One-day button
 btnEl.addEventListener('click', () => {
+  if (btnEl.hasAttribute('disabled')) return;
   const name = document.getElementById('odName').value.trim();
   const phone = document.getElementById('odPhone').value.trim();
   const selected = checks.filter(c => c.checked).map(c => c.dataset.label).join(' | ');
-  sendLead(name, phone, 'ONE DAY: ' + selected);
   saveToSheet(name, phone, 'ONE DAY: ' + selected);
 });
 
