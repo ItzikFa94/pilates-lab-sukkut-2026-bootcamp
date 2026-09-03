@@ -113,8 +113,8 @@ main > section + section::before {
 
 /* Takeaways */
 .takeaway-list { display: grid; gap: var(--space-2); max-width: 620px; margin: var(--space-4) auto 0; padding: 0; list-style: none; color: var(--ink-soft); }
-.takeaway-list li { display: flex; align-items: baseline; justify-content: center; gap: var(--space-2); line-height: 1.65; }
-.takeaway-list li::before { color: var(--wood-deep); content: "•"; }
+.takeaway-list li { display: flex; align-items: baseline; justify-content: flex-start; gap: var(--space-2); text-align: right; line-height: 1.65; }
+.takeaway-list li::before { color: var(--wood-deep); content: "✓"; font-weight: 700; }
 
 /* Pricing */
 .pricing-grid { display: grid; max-width: 640px; gap: var(--space-4); margin: var(--space-5) auto 0; }
