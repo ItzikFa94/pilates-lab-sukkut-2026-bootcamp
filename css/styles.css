@@ -117,23 +117,17 @@ main > section + section::before {
 .takeaway-list li::before { color: var(--wood-deep); content: "•"; }
 
 /* Pricing */
-.pricing-grid { display: grid; gap: var(--space-4); margin-top: var(--space-5); }
+.pricing-grid { display: grid; max-width: 640px; gap: var(--space-4); margin: var(--space-5) auto 0; }
 .price-card { position: relative; padding: 28px 24px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); }
 .price-card.featured { border-color: var(--wood); box-shadow: 0 0 0 2px var(--wood); }
-.badge { position: absolute; top: -13px; right: 22px; border-radius: 100px; padding: 5px 14px; background: var(--wood); color: #fff; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.03em; }
 .price-card h3 { font-size: 1.3rem; }
 .price-meta { margin-top: var(--space-1); color: var(--muted); font-size: 0.87rem; }
-.price-row { display: flex; align-items: end; justify-content: space-around; margin-top: var(--space-3); }
 .price-amount { margin: 0; font-family: "Rubik", sans-serif; font-size: 2.6rem; font-weight: 700; }
 .price-amount-original { color: var(--ink-soft); font-family: "Rubik", sans-serif; font-size: 1.2rem; font-weight: 700; text-decoration: line-through; }
-.price-saving { margin-top: var(--space-1); color: var(--wood-deep); font-size: 0.88rem; font-weight: 700; }
-.price-note { margin-top: var(--space-2); color: var(--muted); font-size: 0.85rem; }
+.total-price { display: inline-flex; align-items: baseline; gap: var(--space-2); }
+.is-hidden { display: none; }
 .lead-fields { display: flex; gap: 10px; margin-top: var(--space-4); margin-bottom: var(--space-3); }
-.lead-field { display: flex; flex: 1; flex-direction: column; }
 .lead-input { width: 100%; min-width: 0; border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; background: #fff; color: var(--ink); font: 0.9rem "Heebo", sans-serif; }
-.lead-input.invalid { border-color: #e53935; }
-.field-error { display: none; min-height: 1em; margin-top: 4px; color: #e53935; font-size: 0.8rem; }
-.field-error.visible { display: block; }
 .day-picker { display: grid; gap: 10px; margin: var(--space-3) 0; }
 .day-option { display: flex; align-items: center; gap: var(--space-2); border: 1px solid var(--line); border-radius: 12px; padding: 12px 14px; background: #fff; cursor: pointer; }
 .day-option:has(input:checked) { border-color: var(--cta); background: var(--moss-soft); }
@@ -141,8 +135,6 @@ main > section + section::before {
 .do-title { font-size: 0.92rem; font-weight: 700; }
 .do-sub { color: var(--muted); font-size: 0.78rem; font-weight: 500; }
 .picker-total { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: var(--space-3); border-top: 1px dashed var(--line); padding-top: var(--space-3); font-weight: 700; }
-.nudge { display: none; margin-bottom: var(--space-3); border-radius: 10px; padding: 9px 12px; background: var(--moss-soft); color: var(--ink); font-size: 0.82rem; font-weight: 600; }
-.nudge.show { display: block; }
 .field-label { display: block; margin-bottom: 6px; color: var(--muted); font-size: 0.78rem; font-weight: 700; }
 .msg-preview { width: 100%; min-height: 92px; resize: vertical; border: 1px solid var(--line); border-radius: 12px; margin-bottom: 0; padding: 12px 14px; background: #fff; color: var(--ink-soft); direction: rtl; font: 0.88rem "Heebo", sans-serif; }
 
@@ -183,7 +175,7 @@ main > section + section::before {
   .day-card:nth-of-type(even) .day-inner { grid-column: 2; }
   .takeaway-list { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: var(--space-5); }
   .why { max-width: 880px; margin-inline: auto; }
-  .pricing-grid { grid-template-columns: 1fr 1fr; align-items: start; }
+  .pricing-grid { grid-template-columns: 1fr; }
   .faq-list { max-width: 760px; margin-inline: auto; }
   .why { padding: 64px; }
 }

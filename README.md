@@ -9,8 +9,8 @@
 
 ## What gets saved
 
-After a visitor enters a valid name and phone number and opens WhatsApp from either
-pricing option, the page saves a row to this [Google Sheet](https://docs.google.com/spreadsheets/d/1OlRr2zQVmjKneG8ravpy0llaNswy_kfeNGgZCzCcOws/edit?gid=0#gid=0):
+After a visitor enters a valid name and phone number, chooses their bootcamp days,
+and opens WhatsApp, the page saves a row to this [Google Sheet](https://docs.google.com/spreadsheets/d/1OlRr2zQVmjKneG8ravpy0llaNswy_kfeNGgZCzCcOws/edit?gid=0#gid=0):
 
 1. Timestamp
 2. Name
