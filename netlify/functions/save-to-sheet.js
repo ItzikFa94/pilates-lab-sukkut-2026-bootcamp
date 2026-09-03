@@ -10,7 +10,7 @@
 const crypto = require('crypto');
 
 const SHEET_ID = process.env.GOOGLE_SHEET_ID || '1OlRr2zQVmjKneG8ravpy0llaNswy_kfeNGgZCzCcOws';
-const SHEET_RANGE = process.env.GOOGLE_SHEET_RANGE || 'Sheet1!A:D';
+const SHEET_RANGE = process.env.GOOGLE_SHEET_RANGE || 'Sheet1!A:G';
 
 function base64url(input) {
   return Buffer.from(input)
@@ -74,7 +74,7 @@ exports.handler = async (event) => {
     return { statusCode: 400, body: 'Invalid JSON' };
   }
 
-  const { name = '', phone = '', note = '' } = data;
+  const { name = '', phone = '', selectedDays = [] } = data;
   if (!name || !phone) {
     return { statusCode: 200, body: JSON.stringify({ ok: false, reason: 'missing_contact_details' }) };
   }
@@ -87,7 +87,16 @@ exports.handler = async (event) => {
       return { statusCode: 200, body: JSON.stringify({ ok: false, reason: 'not_configured' }) };
     }
 
-    const row = [new Date().toISOString(), name, phone, note];
+    const days = new Set(Array.isArray(selectedDays) ? selectedDays.map(String) : []);
+    const row = [
+      new Date().toISOString(),
+      name,
+      phone,
+      days.has('1') ? '✓' : '',
+      days.has('2') ? '✓' : '',
+      days.has('3') ? '✓' : '',
+      days.has('4') ? '✓' : '',
+    ];
     const url =
       `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/` +
       `${encodeURIComponent(SHEET_RANGE)}:append?valueInputOption=USER_ENTERED`;

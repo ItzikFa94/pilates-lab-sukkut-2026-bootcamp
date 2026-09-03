@@ -77,13 +77,13 @@ btnEl.addEventListener('click', (e) => {
 refresh();
 
 // Fire a background call to append a row to the Google Sheet, never blocks WhatsApp.
-function saveToSheet(name, phone, note) {
+function saveToSheet(name, phone, selectedDays) {
   if (!name && !phone) return; // nothing to save, skip silently
   try {
     fetch('/.netlify/functions/save-to-sheet', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name, phone, note }),
+      body: JSON.stringify({ name, phone, selectedDays }),
       keepalive: true,
     }).catch(() => {});
   } catch (e) { /* never block the user's flow on a tracking failure */ }
@@ -94,8 +94,7 @@ const fullBtn = document.getElementById('fullBtn');
 fullBtn.addEventListener('click', () => {
   const name = document.getElementById('fbName').value.trim();
   const phone = document.getElementById('fbPhone').value.trim();
-  const interest = 'FULL BOOTCAMP: כל ארבעת הימים (28.09–01.10)';
-  saveToSheet(name, phone, interest);
+  saveToSheet(name, phone, ['1', '2', '3', '4']);
 });
 
 // One-day button
@@ -103,8 +102,8 @@ btnEl.addEventListener('click', () => {
   if (btnEl.hasAttribute('disabled')) return;
   const name = document.getElementById('odName').value.trim();
   const phone = document.getElementById('odPhone').value.trim();
-  const selected = checks.filter(c => c.checked).map(c => c.dataset.label).join(' | ');
-  saveToSheet(name, phone, 'ONE DAY: ' + selected);
+  const selectedDays = checks.filter(c => c.checked).map(c => c.dataset.day);
+  saveToSheet(name, phone, selectedDays);
 });
 
 function initLeadGate(nameId, phoneId, btnId, waHref) {

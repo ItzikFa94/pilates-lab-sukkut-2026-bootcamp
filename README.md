@@ -15,7 +15,13 @@ pricing option, the page saves a row to this [Google Sheet](https://docs.google.
 1. Timestamp
 2. Name
 3. Phone
-4. Interest — either the full bootcamp or the exact selected days
+4. Day 1
+5. Day 2
+6. Day 3
+7. Day 4
+
+Each selected day is marked with a `✓`; unselected days are left blank. The full
+bootcamp marks all four day columns.
 
 WhatsApp remains immediate: a sheet failure never prevents the visitor from opening it.
 
@@ -33,8 +39,11 @@ WhatsApp remains immediate: a sheet failure never prevents the visitor from open
 5. Redeploy, then submit a test lead from the deployed site and confirm that a row
    appears in the sheet.
 
-The default target is `Sheet1!A:D`. If the destination tab has another name, set
-`GOOGLE_SHEET_RANGE` in Netlify, for example `Leads!A:D`.
+The default target is `Sheet1!A:G`. After adding the time column, ensure the sheet
+headers run in this exact order: time, שם, טלפון, יום 1, יום 2, יום 3, יום 4. If you
+previously set `GOOGLE_SHEET_RANGE` in Netlify to `Sheet1!A:D`, update it to
+`Sheet1!A:G`. If the destination tab has another name, use that name instead, for
+example `Leads!A:G`.
 
 ## Local testing
 
